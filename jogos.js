@@ -337,19 +337,315 @@ const jogos = [
   // e crie um index.html com o Ruffle carregando o arquivo
   {
     id: "papas",
-    nome: "Papa's Freezeria (beta)",
+    nome: "Papa's Freezeria",
     thumb: "assets/thumbnail/Placeholder.webp",
     type: "self",
     url: "games/flash/papas/index.html",
     tags: ["flash", "casual"]
   },
   {
+    id: "ageofwar",
+    nome: "Age of War",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "external",
+    url: "https://html5.gamedistribution.com/9467420d5c84482e9087276338a3a7b1/",
+    tags: ["flash"]
+  },
+  {
+    id: "burritobison",
+    nome: "Burrito Bison: Launcha Libre",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "iframe",
+    url: "http://game168976.konggames.com/gamez/0016/8976/live/index.html",
+    tags: ["flash"]
+  },
+  // --- Papa's Series ---
+  {
+    id: "papas_freezeria",
+    nome: "Papa's Freezeria",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/papas/index.html",
+    tags: ["flash", "casual", "doce"]
+  },
+  {
+    id: "papas_burgeria",
+    nome: "Papa's Burgeria",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/papas_burgeria/index.html",
+    tags: ["flash", "casual"]
+  },
+  {
+    id: "papas_pizzeria",
+    nome: "Papa's Pizzeria",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/papas_pizzeria/index.html",
+    tags: ["flash", "casual"]
+  },
+  {
+    id: "papas_pancakeria",
+    nome: "Papa's Pancakeria",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/papas_pancakeria/index.html",
+    tags: ["flash", "casual"]
+  },
+  {
+    id: "papas_hotdoggeria",
+    nome: "Papa's Hot Doggeria",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/papas_hotdoggeria/index.html",
+    tags: ["flash", "casual"]
+  },
+  {
+    id: "papas_cheeseria",
+    nome: "Papa's Cheeseria",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/papas_cheeseria/index.html",
+    tags: ["flash", "casual"]
+  },
+  {
+    id: "papas_donuteria",
+    nome: "Papa's Donuteria",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/papas_donuteria/index.html",
+    tags: ["flash", "casual", "doce"]
+  },
+  {
+    id: "papas_wingeria",
+    nome: "Papa's Wingeria",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/papas_wingeria/index.html",
+    tags: ["flash", "casual"]
+  },
+  {
+    id: "papas_pastaria",
+    nome: "Papa's Pastaria",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/papas_pastaria/index.html",
+    tags: ["flash", "casual"]
+  },
+  {
+    id: "papas_sushiria",
+    nome: "Papa's Sushiria",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/papas_sushiria/index.html",
+    tags: ["flash", "casual"]
+  },
+  {
+    id: "papas_tacomia",
+    nome: "Papa's Taco Mia",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/papas_tacomia/index.html",
+    tags: ["flash", "casual"]
+  },
+  {
+    id: "papas_scooperia",
+    nome: "Papa's Scooperia",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/papas_scooperia/index.html",
+    tags: ["flash", "casual", "doce"]
+  },
+  {
+    id: "papas_bakeria",
+    nome: "Papa's Bakeria",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/papas_bakeria/index.html",
+    tags: ["flash", "casual", "doce"]
+  },
+
+  // --- Ação / Aventura ---
+  {
+    id: "stickwar",
+    nome: "Stick War",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/stickwar/index.html",
+    tags: ["flash", "acao", "estrategia"]
+  },
+  {
+    id: "stickwar2",
+    nome: "Stick War 2",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/stickwar2/index.html",
+    tags: ["flash", "acao", "estrategia"]
+  },
+  {
+    id: "stickrpg",
+    nome: "Stick RPG",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/stickrpg/index.html",
+    tags: ["flash", "casual", "puzzle"]
+  },
+  {
+    id: "electricman2",
+    nome: "Electricman 2",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/electricman2/index.html",
+    tags: ["flash", "acao"]
+  },
+  {
+    id: "madnesscombat2",
+    nome: "Madness Combat 2",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/madnesscombat2/index.html",
+    tags: ["flash", "acao"]
+  },
+  {
+    id: "happywheels",
+    nome: "Happy Wheels (broken) (substitute with html version)",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/happywheels/index.html",
+    tags: ["flash", "acao", "casual"]
+  },
+  {
+    id: "earntodie",
+    nome: "Earn to Die",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/earntodie/index.html",
+    tags: ["flash", "acao", "casual"]
+  },
+  {
+    id: "thelaststand",
+    nome: "The Last Stand (Vietnamese version)",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/thelaststand/index.html",
+    tags: ["flash", "acao", "estrategia"]
+  },
+
+  {
+    id: "smf_original",
+    nome: "Super Smash Flash",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/smf_original/index.html",
+    tags: ["flash", "acao", "amigos"]
+  },
+  {
+    id: "smf2",
+    nome: "Super Smash Flash 2",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/smf2/index.html",
+    tags: ["flash", "acao", "amigos"]
+  },
+
+  // --- Plataforma ---
+  {
+    id: "fancypants",
+    nome: "Fancy Pants Adventure",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/fancypants/index.html",
+    tags: ["flash", "casual", "acao"]
+  },
+  {
+    id: "fancypants2",
+    nome: "Fancy Pants Adventure 2",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/fancypants2/index.html",
+    tags: ["flash", "casual", "acao"]
+  },
+  {
+    id: "dinorun",
+    nome: "Dino Run",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/dinorun/index.html",
+    tags: ["flash", "casual", "acao"]
+  },
+  {
+    id: "learntofly",
+    nome: "Learn to Fly",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/learntofly/index.html",
+    tags: ["flash", "casual"]
+  },
+
+  // --- Puzzle / Estratégia ---
+  {
     id: "bloons1",
-    nome: "Bloons (original) (beta)",
+    nome: "Bloons (original)",
     thumb: "assets/thumbnail/Placeholder.webp",
     type: "self",
     url: "games/flash/bloons/index.html",
     tags: ["flash", "puzzle", "casual"]
+  },
+  {
+    id: "bloons2",
+    nome: "Bloons 2",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/bloons2/index.html",
+    tags: ["flash", "puzzle", "casual"]
+  },
+  {
+    id: "bloonstd",
+    nome: "Bloons Tower Defense",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/bloonstd/index.html",
+    tags: ["flash", "estrategia", "puzzle"]
+  },
+  {
+    id: "cursedtreasure",
+    nome: "Cursed Treasure",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/cursedtreasure/index.html",
+    tags: ["flash", "estrategia", "puzzle"]
+  },
+  {
+    id: "gemcraft",
+    nome: "Gemcraft",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/gemcraft/index.html",
+    tags: ["flash", "estrategia", "puzzle"]
+  },
+  {
+    id: "infectonator",
+    nome: "Infectonator",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/infectonator/index.html",
+    tags: ["flash", "estrategia", "casual"]
+  },
+  {
+    id: "infectonator2",
+    nome: "Infectonator 2",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/infectonator2/index.html",
+    tags: ["flash", "estrategia", "casual"]
+  },
+  {
+    id: "desconhecido2",
+    nome: "Kingdom Rush",
+    thumb: "assets/thumbnail/Placeholder.webp",
+    type: "self",
+    url: "games/flash/desconhecido2/index.html",
+    tags: ["flash", "estrategia", "puzzle"]
   },
 
 ];

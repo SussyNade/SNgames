@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Bloons - SNGames</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: black; display: flex; align-items: center; justify-content: center; height: 100vh; }
+    ruffle-player { width: 100%; height: 100%; }
+  </style>
+</head>
+<body>
+  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+  <script>
+    window.RufflePlayer = window.RufflePlayer || {};
+    window.addEventListener("load", () => {
+      const ruffle = window.RufflePlayer.newest();
+      const player = ruffle.createPlayer();
+      player.style.width = "100%";
+      player.style.height = "100vh";
+      document.body.appendChild(player);
+      player.load("bloons.swf");
+    });
+  </script>
+</body>
+</html>
