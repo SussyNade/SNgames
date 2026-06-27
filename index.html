@@ -357,13 +357,39 @@ function buscar() {
     : `<div class="grid">${filtrados.map(criarCard).join('')}</div>`;
 }
 
+function _renderRowSupabase(rowId, ids) {
+  const userAge = getUserAge();
+  const row = document.getElementById(rowId);
+  if (!row) return;
+  const lista = ids
+    .map(id => jogos.find(j => j.id === id))
+    .filter(j => j && isGameAllowed(j, userAge))
+    .slice(0, 10);
+  if (lista.length === 0) return;
+  row.innerHTML = '';
+  lista.forEach(j => { row.innerHTML += criarCard(j); });
+}
+
 function _aplicarSupabase() {
   Promise.all([window._sndb.buscarPopulares(), window._sndb.buscarEmAlta()])
     .then(([populares, emAlta]) => {
-      preencherRow('row-populares', 'populares', 10, populares);
-      preencherRow('row-alta', 'alta', 10, emAlta);
+      console.log('[Supabase] populares:', populares);
+      console.log('[Supabase] emAlta:', emAlta);
+      if (populares.length > 0) {
+        _renderRowSupabase('row-populares', populares);
+        console.log('[Supabase] row-populares re-renderizado');
+      }
+      if (emAlta.length > 0) {
+        _renderRowSupabase('row-alta', emAlta);
+        console.log('[Supabase] row-alta re-renderizado');
+      }
     })
-    .catch(() => {});
+    .catch(err => { console.error('[Supabase] erro em _aplicarSupabase:', err); });
+}
+
+function _iniciarAtualizacaoSupabase() {
+  _aplicarSupabase();
+  setInterval(_aplicarSupabase, 60000);
 }
 
 function renderizarTudo() {
@@ -380,9 +406,9 @@ function renderizarTudo() {
   preencherRow('row-populares', 'populares');
 
   if (window._sndb) {
-    _aplicarSupabase();
+    _iniciarAtualizacaoSupabase();
   } else {
-    window._sndbOnReady = _aplicarSupabase;
+    window._sndbOnReady = _iniciarAtualizacaoSupabase;
   }
   preencherRow('row-amigos', 'amigos');
   preencherRow('row-io', 'io');
