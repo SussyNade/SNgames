@@ -6,7 +6,9 @@
 
     const bar = document.createElement('div');
     bar.id = offlineBarId;
-    bar.textContent = 'Você está offline';
+    const lang = localStorage.getItem('language') || 'pt';
+    const dict = (typeof i18n !== 'undefined' && i18n[lang]) ? i18n[lang] : i18n && i18n['pt'];
+    bar.textContent = (dict && dict.offlineTitle) ? dict.offlineTitle : 'Você está offline';
     
     // Styling the bar
     Object.assign(bar.style, {

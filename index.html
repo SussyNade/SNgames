@@ -89,10 +89,10 @@
 
 <div id="age-verification-modal" class="age-modal hidden">
   <div class="age-modal-content">
-    <h2>Age Verification</h2>
-    <p>Please enter your date of birth to continue.</p>
+    <h2 data-i18n="ageVerifTitle">Verificação de Idade</h2>
+    <p data-i18n="ageVerifSubtitle">Por favor, insira sua data de nascimento para continuar.</p>
     <input type="date" id="age-input">
-    <button onclick="submitAge()">Confirm</button>
+    <button onclick="submitAge()" data-i18n="ageVerifConfirm">Confirmar</button>
   </div>
 </div>
 
@@ -174,8 +174,8 @@
     </div>
 
     <div class="config-section">
-      <h3>Age Control</h3>
-      <button class="config-option" onclick="changeAge()">Change Age</button>
+      <h3 data-i18n="ageControlTitle">Controle de Idade</h3>
+      <button class="config-option" onclick="changeAge()" data-i18n="ageControlChange">Trocar Idade</button>
     </div>
 
     <div class="config-section">
@@ -223,7 +223,7 @@ function criarCard(jogo) {
   const ratingHTML = getRatingHTML(ratingValue, ratingSystem);
   const offlineBadge = jogo.type === 'self' ? `<div class="offline-badge" title="Works Offline">⚡</div>` : '';
   return `
-    <a href="${linkJogo(jogo)}" class="card">
+    <a href="${linkJogo(jogo)}" class="card" onclick="trackClick('${jogo.id}')">
       <div class="thumb-wrapper">
         <img src="${jogo.thumb}" alt="${jogo.nome}">
         ${offlineBadge}
@@ -234,13 +234,49 @@ function criarCard(jogo) {
   `;
 }
 
+function trackClick(id) {
+  const clicks = JSON.parse(localStorage.getItem('sn-clicks') || '{}');
+  clicks[id] = (clicks[id] || 0) + 1;
+  localStorage.setItem('sn-clicks', JSON.stringify(clicks));
+}
+
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function getTopClickedTags() {
+  const clicks = JSON.parse(localStorage.getItem('sn-clicks') || '{}');
+  const topIds = Object.entries(clicks).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([id]) => id);
+  const tags = new Set();
+  topIds.forEach(id => {
+    const jogo = jogos.find(j => j.id === id);
+    if (jogo) jogo.tags.forEach(t => tags.add(t));
+  });
+  return tags;
+}
+
+function sortWithBoost(lista) {
+  const topTags = getTopClickedTags();
+  const shuffled = shuffleArray([...lista]);
+  if (topTags.size === 0) return shuffled;
+  return shuffled.sort((a, b) => {
+    const scoreA = a.tags.filter(t => topTags.has(t)).length;
+    const scoreB = b.tags.filter(t => topTags.has(t)).length;
+    return scoreB - scoreA;
+  });
+}
+
 function preencherRow(id, tag, limite = 10) {
   const userAge = getUserAge();
   if (userAge === null) return;
   const lang = localStorage.getItem('language') || 'pt';
   const displayLang = i18n[lang] ? lang : 'pt';
   const filtrados = jogos.filter(j => j.tags.includes(tag) && isGameAllowed(j, userAge));
-  const mostrar = filtrados.slice(0, limite);
+  const mostrar = sortWithBoost(filtrados).slice(0, limite);
   const row = document.getElementById(id);
   if (!row) return;
 
@@ -274,7 +310,7 @@ function abrirModal(tag) {
   };
   const filtrados = jogos.filter(j => j.tags.includes(tag) && isGameAllowed(j, userAge));
   document.getElementById('modal-title').textContent = titulos[tag] || tag;
-  document.getElementById('modal-grid').innerHTML = filtrados.map(criarCard).join('');
+  document.getElementById('modal-grid').innerHTML = sortWithBoost(filtrados).map(criarCard).join('');
   document.getElementById('modal').classList.remove('hidden');
 }
 
