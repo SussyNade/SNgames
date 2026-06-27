@@ -206,6 +206,7 @@
 <script src="age-system.js"></script>
 <script src="jogos.js"></script>
 <script src="offline-bar.js"></script>
+<script type="module" src="supabase.js"></script>
 <script>
 function linkJogo(jogo) {
   return `game.html?title=${encodeURIComponent(jogo.nome)}&type=${jogo.type}&url=${encodeURIComponent(jogo.url)}&thumb=${encodeURIComponent(jogo.thumb)}&tags=${encodeURIComponent(jogo.tags.join(","))}&warn=${jogo.requiresPointerLock ? 1 : 0}`;
@@ -234,10 +235,17 @@ function criarCard(jogo) {
   `;
 }
 
+window._sndbQueue = window._sndbQueue || [];
+
 function trackClick(id) {
   const clicks = JSON.parse(localStorage.getItem('sn-clicks') || '{}');
   clicks[id] = (clicks[id] || 0) + 1;
   localStorage.setItem('sn-clicks', JSON.stringify(clicks));
+  if (window._sndb) {
+    window._sndb.registrarSessao(id);
+  } else {
+    window._sndbQueue.push(id);
+  }
 }
 
 function shuffleArray(arr) {
@@ -270,13 +278,30 @@ function sortWithBoost(lista) {
   });
 }
 
-function preencherRow(id, tag, limite = 10) {
+function sortComSupabase(lista, priorityIds) {
+  const rankMap = new Map(priorityIds.map((id, i) => [id, i]));
+  const topTags = getTopClickedTags();
+  const shuffled = shuffleArray([...lista]);
+  return shuffled.sort((a, b) => {
+    const rankA = rankMap.has(a.id) ? rankMap.get(a.id) : Infinity;
+    const rankB = rankMap.has(b.id) ? rankMap.get(b.id) : Infinity;
+    if (rankA !== rankB) return rankA - rankB;
+    if (topTags.size > 0) {
+      const scoreA = a.tags.filter(t => topTags.has(t)).length;
+      const scoreB = b.tags.filter(t => topTags.has(t)).length;
+      return scoreB - scoreA;
+    }
+    return 0;
+  });
+}
+
+function preencherRow(id, tag, limite = 10, priorityIds = null) {
   const userAge = getUserAge();
   if (userAge === null) return;
   const lang = localStorage.getItem('language') || 'pt';
   const displayLang = i18n[lang] ? lang : 'pt';
   const filtrados = jogos.filter(j => j.tags.includes(tag) && isGameAllowed(j, userAge));
-  const mostrar = sortWithBoost(filtrados).slice(0, limite);
+  const mostrar = (priorityIds ? sortComSupabase(filtrados, priorityIds) : sortWithBoost(filtrados)).slice(0, limite);
   const row = document.getElementById(id);
   if (!row) return;
 
@@ -332,6 +357,15 @@ function buscar() {
     : `<div class="grid">${filtrados.map(criarCard).join('')}</div>`;
 }
 
+function _aplicarSupabase() {
+  Promise.all([window._sndb.buscarPopulares(), window._sndb.buscarEmAlta()])
+    .then(([populares, emAlta]) => {
+      preencherRow('row-populares', 'populares', 10, populares);
+      preencherRow('row-alta', 'alta', 10, emAlta);
+    })
+    .catch(() => {});
+}
+
 function renderizarTudo() {
   const userAge = getUserAge();
   if (userAge === null) {
@@ -344,6 +378,12 @@ function renderizarTudo() {
   renderFavoritos();
   preencherRow('row-alta', 'alta');
   preencherRow('row-populares', 'populares');
+
+  if (window._sndb) {
+    _aplicarSupabase();
+  } else {
+    window._sndbOnReady = _aplicarSupabase;
+  }
   preencherRow('row-amigos', 'amigos');
   preencherRow('row-io', 'io');
   preencherRow('row-acao', 'acao');

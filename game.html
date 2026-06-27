@@ -433,6 +433,7 @@
 <script src="age-system.js"></script>
 <script src="jogos.js"></script>
 <script src="offline-bar.js"></script>
+<script type="module" src="supabase.js"></script>
 <script>
 function linkJogo(jogo) {
   return `game.html?title=${encodeURIComponent(jogo.nome)}&type=${jogo.type}&url=${encodeURIComponent(jogo.url)}&thumb=${encodeURIComponent(jogo.thumb)}&tags=${encodeURIComponent(jogo.tags.join(','))}&warn=${jogo.requiresPointerLock ? 1 : 0}`;
@@ -498,6 +499,8 @@ function carregarJogo() {
     `;
     return;
   }
+
+  if (jogoAtual) window._sndb?.registrarSessao(jogoAtual.id);
 
   const lang = localStorage.getItem('language') || 'pt';
   const displayLang = i18n[lang] ? lang : 'pt';
