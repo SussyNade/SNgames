@@ -381,10 +381,10 @@
 
 <div id="age-verification-modal" class="age-modal hidden">
   <div class="age-modal-content">
-    <h2>Age Verification</h2>
-    <p>Please enter your date of birth to continue.</p>
+    <h2 data-i18n="ageVerifTitle">Verificação de Idade</h2>
+    <p data-i18n="ageVerifSubtitle">Por favor, insira sua data de nascimento para continuar.</p>
     <input type="date" id="age-input">
-    <button onclick="submitAge()">Confirm</button>
+    <button onclick="submitAge()" data-i18n="ageVerifConfirm">Confirmar</button>
   </div>
 </div>
 
@@ -412,8 +412,8 @@
     <div id="game-container" style="flex:1; position:relative;"></div>
     <div class="bottom-bar">
       <div class="game-info">
-        <h1 id="game-title-bottom">Carregando...</h1>
-        <p id="game-developer">Desenvolvedor desconhecido</p>
+        <h1 id="game-title-bottom"></h1>
+        <p id="game-developer"></p>
       </div>
       <div class="actions">
         <button class="action-btn hidden" id="dl-btn" onclick="iniciarDownload()" title="Baixar" data-i18n-title="btnBaixar">⬇</button>
@@ -488,10 +488,12 @@ function carregarJogo() {
   document.getElementById('age-verification-modal').classList.add('hidden');
 
   if (jogoAtual && !isGameAllowed(jogoAtual, userAge)) {
+    const lang = localStorage.getItem('language') || 'pt';
+    const displayLang = i18n[lang] ? lang : 'pt';
     document.getElementById("game-container").innerHTML = `
       <div class="restricted-message">
-        <h2>Content Restricted</h2>
-        <p>This game is restricted for your age.</p>
+        <h2>${i18n[displayLang].contentRestricted}</h2>
+        <p>${i18n[displayLang].contentRestrictedText}</p>
       </div>
     `;
     return;
@@ -901,8 +903,8 @@ if ('serviceWorker' in navigator) {
     </div>
 
     <div class="config-section">
-      <h3>Age Control</h3>
-      <button class="config-option" onclick="changeAge()">Change Age</button>
+      <h3 data-i18n="ageControlTitle">Controle de Idade</h3>
+      <button class="config-option" onclick="changeAge()" data-i18n="ageControlChange">Trocar Idade</button>
     </div>
 
     <div class="config-section">
